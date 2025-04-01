@@ -5,44 +5,44 @@ namespace SIPCalculator
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Model> sipInvestmentData;
-        public ObservableCollection<Model> SIPInvestmentData
+        private ObservableCollection<Model> investmentData;
+        public ObservableCollection<Model> InvestmentData
         {
-            get => sipInvestmentData;
+            get => investmentData;
             set
             {
-                if(sipInvestmentData != value)
+                if(investmentData != value)
                 {
-                    sipInvestmentData = value;
-                    OnPropertyChanged(nameof(SIPInvestmentData));
+                    investmentData = value;
+                    OnPropertyChanged(nameof(InvestmentData));
                 }
             }
         }
 
-        private ObservableCollection<Model> sipOverallData;
-        public ObservableCollection <Model> SIPOverallData
+        private ObservableCollection<Model> overallInvestmentData;
+        public ObservableCollection <Model> OverallInvestmentData
         {
-            get => sipOverallData;
+            get => overallInvestmentData;
             set
             {
-                if(sipOverallData != value)
+                if(overallInvestmentData != value)
                 {
-                    sipOverallData = value;
-                    OnPropertyChanged(nameof(SIPOverallData));
+                    overallInvestmentData = value;
+                    OnPropertyChanged(nameof(OverallInvestmentData));
                 }
             }
         }
 
-        private ObservableCollection<Model> adjustedData;
-        public ObservableCollection<Model> AdjustedData
+        private ObservableCollection<Model> inflationImpactedData;
+        public ObservableCollection<Model> InflationImpactedData
         {
-            get => adjustedData;
+            get => inflationImpactedData;
             set
             {
-                if (adjustedData != value)
+                if (inflationImpactedData != value)
                 {
-                    adjustedData = value;
-                    OnPropertyChanged(nameof(AdjustedData));
+                    inflationImpactedData = value;
+                    OnPropertyChanged(nameof(InflationImpactedData));
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace SIPCalculator
             InvestPeriod = 5;
             ExpectedReturns = 12;
 
-            SIPInvestmentData = GetSIPDataCollection();
+            InvestmentData = Get_Investment_DataCollection();
 
             CustomBrushes = new List<Brush>()
             {
@@ -130,7 +130,7 @@ namespace SIPCalculator
                 new SolidColorBrush(Color.FromArgb("#27AE60")),
             };
 
-            SIPOverallData = GetOverallSIPDataCollection();
+            OverallInvestmentData = GetOverall_Investment_DataCollection();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -140,7 +140,7 @@ namespace SIPCalculator
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public ObservableCollection<Model> GetSIPDataCollection()
+        public ObservableCollection<Model> Get_Investment_DataCollection()
         {
             var data = new ObservableCollection<Model>();
 
@@ -160,13 +160,13 @@ namespace SIPCalculator
             return data;
         }
 
-        public ObservableCollection<Model> GetOverallSIPDataCollection()
+        public ObservableCollection<Model> GetOverall_Investment_DataCollection()
         {
             var data = new ObservableCollection<Model>();
-            int count = SIPInvestmentData.Count - 1;
-            data.Add(new Model() { AmountName = "TotalInvested", Amount = SIPInvestmentData[count].TotalInvested });
-            data.Add(new Model() { AmountName = "EstimatedReturns", Amount = SIPInvestmentData[count].EstimatedReturns });
-            data.Add(new Model() { AmountName = "TotalAmount", Amount = SIPInvestmentData[count].TotalInvested + SIPInvestmentData[count].EstimatedReturns });
+            int count = InvestmentData.Count - 1;
+            data.Add(new Model() { AmountName = "TotalInvested", Amount = InvestmentData[count].TotalInvested });
+            data.Add(new Model() { AmountName = "EstimatedReturns", Amount = InvestmentData[count].EstimatedReturns });
+            data.Add(new Model() { AmountName = "TotalAmount", Amount = InvestmentData[count].TotalInvested + InvestmentData[count].EstimatedReturns });
             return data;
         }
     }

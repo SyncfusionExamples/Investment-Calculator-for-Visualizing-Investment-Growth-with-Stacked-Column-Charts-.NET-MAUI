@@ -20,7 +20,7 @@ namespace SIPCalculator
             isInvestAmount = true;
         }
 
-        public void DynamicallyGetSIPDataCollection()
+        public void Dynamically_Get_Investment_DataCollection()
         {
             var data = new ObservableCollection<Model>();
 
@@ -113,43 +113,43 @@ namespace SIPCalculator
                     }
                 }
             }
-            viewModel.SIPInvestmentData = data;
+            viewModel.InvestmentData = data;
         }
 
-        public void DynamicallyGetOverallSIPDataCollection()
+        public void Dynamically_GetOverall_Investment_DataCollection()
         {
             var data = new ObservableCollection<Model>();
             if (isSIP)
             {
-                int count = viewModel.SIPInvestmentData.Count - 1;
-                data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.SIPInvestmentData[count].TotalInvested });
-                data.Add(new Model() { AmountName = "EstimatedReturns", Amount = viewModel.SIPInvestmentData[count].EstimatedReturns });
+                int count = viewModel.InvestmentData.Count - 1;
+                data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
+                data.Add(new Model() { AmountName = "EstimatedReturns", Amount = viewModel.InvestmentData[count].EstimatedReturns });
             }
             else if (isLumpSum)
             {
-                int count = viewModel.SIPInvestmentData.Count - 1;
-                data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.SIPInvestmentData[count].TotalInvested });
-                data.Add(new Model() { AmountName = "Gains", Amount = viewModel.SIPInvestmentData[count].EstimatedReturns });
+                int count = viewModel.InvestmentData.Count - 1;
+                data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
+                data.Add(new Model() { AmountName = "Gains", Amount = viewModel.InvestmentData[count].EstimatedReturns });
             }
             else if (isMutualFund)
             {
                 if (isMutalFundMonthlySIP)
                 {
-                    int count = viewModel.SIPInvestmentData.Count - 1;
-                    data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.SIPInvestmentData[count].TotalInvested });
-                    data.Add(new Model() { AmountName = "EstimatedReturns", Amount = viewModel.SIPInvestmentData[count].EstimatedReturns });
+                    int count = viewModel.InvestmentData.Count - 1;
+                    data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
+                    data.Add(new Model() { AmountName = "EstimatedReturns", Amount = viewModel.InvestmentData[count].EstimatedReturns });
                 }
                 else
                 {
-                    int count = viewModel.SIPInvestmentData.Count - 1;
-                    data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.SIPInvestmentData[count].TotalInvested });
-                    data.Add(new Model() { AmountName = "Gains", Amount = viewModel.SIPInvestmentData[count].EstimatedReturns });
+                    int count = viewModel.InvestmentData.Count - 1;
+                    data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
+                    data.Add(new Model() { AmountName = "Gains", Amount = viewModel.InvestmentData[count].EstimatedReturns });
                 }
             }
-            viewModel.SIPOverallData = data;
+            viewModel.OverallInvestmentData = data;
         }
 
-        public void DynamicallySIPGoalAmountDataCollection()
+        public void Dynamically_Investment_GoalAmount_DataCollection()
         {
             var data = new ObservableCollection<Model>();
             if (isSIP)
@@ -173,10 +173,10 @@ namespace SIPCalculator
                 data.Add(new Model() { AmountName = "TotalInvested", Amount = Math.Round(initialInvest, 0) });
                 data.Add(new Model() { AmountName = "InterestEarned", Amount = Math.Round(totalInterest, 0) });
             }
-            viewModel.SIPOverallData = data;
+            viewModel.OverallInvestmentData = data;
         }
 
-        public void DynamicallyAdjustGoalAmountDataCollection()
+        public void Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection()
         {
             var data = new ObservableCollection<Model>();
             if (isSIP)
@@ -201,7 +201,7 @@ namespace SIPCalculator
                 data.Add(new Model() { AmountName = "TotalInvested", Amount = Math.Round(adjustinitialInvest, 0) });
                 data.Add(new Model() { AmountName = "InterestEarned", Amount = Math.Round(adjusttotalInterest, 0) });
             }
-            viewModel.AdjustedData = data;
+            viewModel.InflationImpactedData = data;
         }
 
         private void Entry_TextChanged(object sender, TextChangedEventArgs e)
@@ -217,8 +217,8 @@ namespace SIPCalculator
                 {
                     viewModel.IntialAmount = 1;
                 }
-                DynamicallyGetSIPDataCollection();
-                DynamicallyGetOverallSIPDataCollection();
+                Dynamically_Get_Investment_DataCollection();
+                Dynamically_GetOverall_Investment_DataCollection();
             }
             if (viewModel != null && isGoalAmount)
             {
@@ -231,8 +231,8 @@ namespace SIPCalculator
                 {
                     viewModel.IntialAmount = 1;
                 }
-                DynamicallySIPGoalAmountDataCollection();
-                DynamicallyAdjustGoalAmountDataCollection();
+                Dynamically_Investment_GoalAmount_DataCollection();
+                Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection();
             }
         }
 
@@ -249,8 +249,8 @@ namespace SIPCalculator
                 {
                     viewModel.InvestPeriod = 1;
                 }
-                DynamicallyGetSIPDataCollection();
-                DynamicallyGetOverallSIPDataCollection();
+                Dynamically_Get_Investment_DataCollection();
+                Dynamically_GetOverall_Investment_DataCollection();
             }
             if (viewModel != null && isGoalAmount)
             {
@@ -263,8 +263,8 @@ namespace SIPCalculator
                 {
                     viewModel.InvestPeriod = 1;
                 }
-                DynamicallySIPGoalAmountDataCollection();
-                DynamicallyAdjustGoalAmountDataCollection();
+                Dynamically_Investment_GoalAmount_DataCollection();
+                Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection();
             }
         }
 
@@ -281,8 +281,8 @@ namespace SIPCalculator
                 {
                     viewModel.ExpectedReturns = 1;
                 }
-                DynamicallyGetSIPDataCollection();
-                DynamicallyGetOverallSIPDataCollection();
+                Dynamically_Get_Investment_DataCollection();
+                Dynamically_GetOverall_Investment_DataCollection();
             }
             if (viewModel != null && isGoalAmount)
             {
@@ -295,8 +295,8 @@ namespace SIPCalculator
                 {
                     viewModel.ExpectedReturns = 1;
                 }
-                DynamicallySIPGoalAmountDataCollection();
-                DynamicallyAdjustGoalAmountDataCollection();
+                Dynamically_Investment_GoalAmount_DataCollection();
+                Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection();
             }
         }
 
@@ -313,8 +313,8 @@ namespace SIPCalculator
                 {
                     viewModel.AnnualStepUp = 1;
                 }
-                DynamicallyGetSIPDataCollection();
-                DynamicallyGetOverallSIPDataCollection();
+                Dynamically_Get_Investment_DataCollection();
+                Dynamically_GetOverall_Investment_DataCollection();
             }
         }
 
@@ -335,8 +335,8 @@ namespace SIPCalculator
                     isGoalAmount = false;
                     initialamountLabel.Text = "Montly Investment";
                     stackSeries2.Label = "EstimatedReturns";
-                    DynamicallyGetSIPDataCollection();
-                    DynamicallyGetOverallSIPDataCollection();
+                    Dynamically_Get_Investment_DataCollection();
+                    Dynamically_GetOverall_Investment_DataCollection();
                     break;
                 case 1:
                     isSIP = false;
@@ -352,8 +352,8 @@ namespace SIPCalculator
                     isGoalAmount = false;
                     initialamountLabel.Text = "Investment Amount";
                     stackSeries2.Label = "Gains";
-                    DynamicallyGetSIPDataCollection();
-                    DynamicallyGetOverallSIPDataCollection();
+                    Dynamically_Get_Investment_DataCollection();
+                    Dynamically_GetOverall_Investment_DataCollection();
                     break;
                 case 2:
                     isSIP = false;
@@ -369,8 +369,8 @@ namespace SIPCalculator
                     isGoalAmount = false;
                     initialamountLabel.Text = "Montly Investment";
                     stackSeries2.Label = "EstimatedReturns";
-                    DynamicallyGetSIPDataCollection();
-                    DynamicallyGetOverallSIPDataCollection();
+                    Dynamically_Get_Investment_DataCollection();
+                    Dynamically_GetOverall_Investment_DataCollection();
                     break;
             }
         }
@@ -391,6 +391,10 @@ namespace SIPCalculator
                 if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
                 {
                     interactionLayout.Spacing = 50;
+                }
+                else if(DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+                {
+                    interactionLayout.Spacing = 150;
                 }
                 else
                 {
@@ -433,6 +437,10 @@ namespace SIPCalculator
                 {
                     interactionLayout.Spacing = 50;
                 }
+                else if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+                {
+                    interactionLayout.Spacing = 150;
+                }
                 else
                 {
                     interactionLayout.Spacing = 100;
@@ -469,6 +477,10 @@ namespace SIPCalculator
                 if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
                 {
                     interactionLayout.Spacing = 25;
+                }
+                else if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+                {
+                    interactionLayout.Spacing = 150;
                 }
                 else
                 {
