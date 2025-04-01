@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:segmentedControl="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:cards="clr-namespace:Syncfusion.Maui.Toolkit.Cards;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:local="clr-namespace:SIPCalculator"
+             x:Class="SIPCalculator.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:ViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+    
+    <Border StrokeShape="RoundRectangle 10" Margin="5" Stroke="Black" StrokeThickness="1">
+
+        <ScrollView VerticalScrollBarVisibility="{OnPlatform Android=Always, Default=Never}">
+
+            <Grid BackgroundColor="#E8F4FD">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.55*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+
+                <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="10,5,5,5">
+                    <Label Text="SIP Calculator: Track Investment Growth Using Stacked Column Charts" FontSize="{OnPlatform Android=15, Default=25, iOS=15}" HorizontalOptions="Start"/>
+                    <Label Text="Analyze and visualize your SIP investment growth with intuitive stacked column charts for better financial planning." FontSize="{OnPlatform Android=10, Default=15, iOS=10}"/>
+                </VerticalStackLayout>
+
+                <Grid Grid.Row="1" Margin="{OnPlatform Default=5, Android=0}">
+                    <segmentedControl:SfSegmentedControl x:Name="segmentControl" HorizontalOptions="Center" SegmentWidth="{OnPlatform Android=100, Default=200, iOS=100}" CornerRadius="5" SelectionChanged="SfSegmentedControl_SelectionChanged" SelectedIndex="0" StrokeThickness="2" HeightRequest="{OnPlatform Android=20}">
+                        <segmentedControl:SfSegmentedControl.SelectionIndicatorSettings>
+                            <segmentedControl:SelectionIndicatorSettings SelectionIndicatorPlacement="Fill"
+                                                                        Background="#2980B9"/>
+                        </segmentedControl:SfSegmentedControl.SelectionIndicatorSettings>
+                        <segmentedControl:SfSegmentedControl.TextStyle>
+                            <segmentedControl:SegmentTextStyle FontSize="{OnPlatform Android=12, iOS=12}"/>
+                        </segmentedControl:SfSegmentedControl.TextStyle>
+                        <segmentedControl:SfSegmentedControl.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>SIP</x:String>
+                                <x:String>LumpSum</x:String>
+                                <x:String>Mutual Fund</x:String>
+                            </x:Array>
+                        </segmentedControl:SfSegmentedControl.ItemsSource>
+                    </segmentedControl:SfSegmentedControl>
+                </Grid>
+
+                <Grid Grid.Row="2">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.2*"/>
+                            <RowDefinition Height="0.4*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+
+                        <HorizontalStackLayout Margin="{OnPlatform Default='40,5,5,5', Android='10,0', iOS='10,0'}" Grid.Row="0" Spacing="{OnPlatform Android=10, Default=100, iOS=20}">
+                            <RadioButton x:Name="radioButton1" Content="Investment Amount" HorizontalOptions="Start" FontSize="{OnPlatform Android=12,iOS=12, Default=15}" CheckedChanged="radioButton1_CheckedChanged" IsChecked="True"/>
+                            <RadioButton x:Name="radioButton2" Content="Goal Amount" HorizontalOptions="Start" FontSize="{OnPlatform Android=12, iOS=12, Default=15}" CheckedChanged="radioButton2_CheckedChanged"/>
+                            <RadioButton x:Name="radioButton3" Content="StepUp" HorizontalOptions="Start" FontSize="{OnPlatform Android=12, iOS=12, Default=15}" CheckedChanged="radioButton3_CheckedChanged"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout x:Name="interactionLayout" Grid.Row="1" Margin="{OnPlatform Default='40,5,0,0', Android='15,0,0,0', iOS='15,0,0,0'}" Spacing="{OnPlatform Default=100, Android=50, iOS=50}">
+                            <VerticalStackLayout Spacing="{OnPlatform Default=5, Android=2, iOS=2}">
+                                <HorizontalStackLayout Spacing="{OnPlatform Default=30, Android=10, iOS=10}">
+                                    <Label x:Name="initialamountLabel" Text="Montly Investment" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" VerticalOptions="Center"/>
+                                    <Entry x:Name="initialamountEntry" Keyboard="Numeric" WidthRequest="{OnPlatform Default=150, Android=70, iOS=70}" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" Text="{Binding IntialAmount, StringFormat='₹ {0:N0}'}" HeightRequest="30" TextChanged="Entry_TextChanged"/>
+                                </HorizontalStackLayout>
+                                <Slider x:Name="slider" Minimum="1" Value="{Binding IntialAmount}" Maximum="10000000"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="{OnPlatform Default=5, Android=2, iOS=2}">
+                                <HorizontalStackLayout Spacing="{OnPlatform Default=30, Android=10, iOS=10}">
+                                    <Label Text="Investment Period" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" VerticalOptions="Center"/>
+                                    <Entry Keyboard="Numeric" WidthRequest="{OnPlatform Default=150, Android=70, iOS=70}" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" Text="{Binding InvestPeriod, StringFormat='{0:N0} Yrs'}" HeightRequest="30" TextChanged="Entry_TextChanged_1"/>
+                                </HorizontalStackLayout>
+                                <Slider Minimum="1" Value="{Binding InvestPeriod}" Maximum="50"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="{OnPlatform Default=5, Android=2, iOS=2}">
+                                <HorizontalStackLayout Spacing="{OnPlatform Default=30, Android=10, iOS=10}">
+                                    <Label Text="Expected Returns" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" VerticalOptions="Center"/>
+                                    <Entry Keyboard="Numeric" WidthRequest="{OnPlatform Default=150, Android=70, iOS=70}" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" Text="{Binding ExpectedReturns, StringFormat='{0:N1} %'}" HeightRequest="30" TextChanged="Entry_TextChanged_2"/>
+                                </HorizontalStackLayout>
+                                <Slider Minimum="1" Value="{Binding ExpectedReturns}" Maximum="50"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout x:Name="annualSetUpBox" Spacing="{OnPlatform Default=5, Android=2, iOS=2}" IsVisible="False">
+                                <HorizontalStackLayout Spacing="{OnPlatform Default=30, Android=10, iOS=10}">
+                                    <Label Text="Annual StepUp" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" VerticalOptions="Center"/>
+                                    <Entry Keyboard="Numeric" WidthRequest="{OnPlatform Default=150, Android=70, iOS=70}" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" Text="{Binding AnnualStepUp, StringFormat='{0:N1} %'}" HeightRequest="30" TextChanged="Entry_TextChanged_3"/>
+                                </HorizontalStackLayout>
+                                <Slider Minimum="1" Value="{Binding AnnualStepUp}" Maximum="50"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <Grid ColumnSpacing="{OnPlatform Default=20}" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <cards:SfCardView x:Name="cartesianChart1" Grid.Column="0" Margin="{OnPlatform Default='30,0,0,20', Android='25,5,0,15', iOS='25,5,0,15'}" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
+
+                                <chart:SfCartesianChart PaletteBrushes="{Binding CustomBrushes}" Margin="10">
+                                    
+                                    <chart:SfCartesianChart.Resources>
+                                        <ResourceDictionary>
+                                            <local:NumberFormatterConverter x:Key="NumberFormatConverter"/>
+                                        </ResourceDictionary>
+                                    </chart:SfCartesianChart.Resources>
+
+                                    <chart:SfCartesianChart.XAxes>
+                                        <chart:CategoryAxis ShowMajorGridLines="False" EdgeLabelsDrawingMode="Fit" LabelRotation="-45">
+                                            <chart:CategoryAxis.AxisLineStyle>
+                                                <chart:ChartLineStyle Stroke="Black"/>
+                                            </chart:CategoryAxis.AxisLineStyle>
+                                            <chart:CategoryAxis.MajorTickStyle>
+                                                <chart:ChartAxisTickStyle Stroke="Black"/>
+                                            </chart:CategoryAxis.MajorTickStyle>
+                                        </chart:CategoryAxis>
+                                    </chart:SfCartesianChart.XAxes>
+
+                                    <chart:SfCartesianChart.YAxes>
+                                        <chart:NumericalAxis EdgeLabelsDrawingMode="Fit" LabelCreated="NumericalAxis_LabelCreated">
+                                            <chart:NumericalAxis.AxisLineStyle>
+                                                <chart:ChartLineStyle Stroke="Transparent"/>
+                                            </chart:NumericalAxis.AxisLineStyle>
+                                        </chart:NumericalAxis>
+                                    </chart:SfCartesianChart.YAxes>
+
+                                    <chart:SfCartesianChart.Legend>
+                                        <chart:ChartLegend/>
+                                    </chart:SfCartesianChart.Legend>
+
+                                    <chart:StackingColumnSeries x:Name="stackSeries1" ItemsSource="{Binding SIPInvestmentData}"
+                                                                XBindingPath="Year"
+                                                                YBindingPath="TotalInvested"
+                                                                EnableTooltip="True" Label="TotalInvested" LegendIcon="SeriesType" EnableAnimation="True">
+                                        <chart:StackingColumnSeries.TooltipTemplate>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="{Binding Item.TotalInvested, Converter={StaticResource NumberFormatConverter}}"
+                                                           TextColor="White"
+                                                           FontSize="12"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </chart:StackingColumnSeries.TooltipTemplate>
+                                    </chart:StackingColumnSeries>
+
+                                    <chart:StackingColumnSeries x:Name="stackSeries2" ItemsSource="{Binding SIPInvestmentData}"
+                                                                XBindingPath="Year"
+                                                                YBindingPath="EstimatedReturns"
+                                                                EnableTooltip="True" Label="EstimatedReturns" LegendIcon="SeriesType" EnableAnimation="True">
+                                        <chart:StackingColumnSeries.TooltipTemplate>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="{Binding Item.EstimatedReturns, Converter={StaticResource NumberFormatConverter}}"
+                                                            TextColor="White"
+                                                            FontSize="12"
+                                                            HorizontalOptions="Center"
+                                                            VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </chart:StackingColumnSeries.TooltipTemplate>
+                                    </chart:StackingColumnSeries>
+
+                                </chart:SfCartesianChart>
+
+                            </cards:SfCardView>
+
+                            <cards:SfCardView x:Name="cartesianChart2" IsVisible="False" Grid.Column="0" Margin="{OnPlatform Default='30,0,0,20',Android='25,5,0,15', iOS='25,5,0,15'}" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
+
+                                <chart:SfCartesianChart Margin="10,0,10,10">
+
+                                    <chart:SfCartesianChart.Resources>
+                                        <ResourceDictionary>
+                                            <local:SegmentColorConverter x:Key="SegmentColorConverter"/>
+                                            <local:SegmentColorConverter1 x:Key="SegmentColorConverter1"/>
+                                        </ResourceDictionary>
+                                    </chart:SfCartesianChart.Resources>
+
+                                    <chart:SfCartesianChart.Title>
+                                        <Label Text="Inflation Impacted Investment Amounts" HorizontalOptions="Center" FontSize="{OnPlatform Default=17, Android=15,iOS=15}"/>
+                                    </chart:SfCartesianChart.Title>
+
+                                    <chart:SfCartesianChart.XAxes>
+                                        <chart:CategoryAxis ShowMajorGridLines="False">
+                                            <chart:CategoryAxis.AxisLineStyle>
+                                                <chart:ChartLineStyle Stroke="Black"/>
+                                            </chart:CategoryAxis.AxisLineStyle>
+                                            <chart:CategoryAxis.MajorTickStyle>
+                                                <chart:ChartAxisTickStyle Stroke="Black"/>
+                                            </chart:CategoryAxis.MajorTickStyle>
+                                        </chart:CategoryAxis>
+                                    </chart:SfCartesianChart.XAxes>
+
+                                    <chart:SfCartesianChart.YAxes>
+                                        <chart:NumericalAxis EdgeLabelsDrawingMode="Fit" PlotOffsetEnd="{OnPlatform Default=15, Android=10, iOS=10}" LabelCreated="NumericalAxis_LabelCreated">
+                                            <chart:NumericalAxis.AxisLineStyle>
+                                                <chart:ChartLineStyle Stroke="Transparent"/>
+                                            </chart:NumericalAxis.AxisLineStyle>
+                                        </chart:NumericalAxis>
+                                    </chart:SfCartesianChart.YAxes>
+
+                                    <chart:SfCartesianChart.Legend>
+                                        <chart:ChartLegend>
+                                            <chart:ChartLegend.ItemTemplate>
+                                                <DataTemplate x:Name="dataTemplate">
+                                                    <HorizontalStackLayout Spacing="10" Margin="5">
+                                                        <HorizontalStackLayout>
+                                                            <Rectangle HeightRequest="{OnPlatform Default=12, Android=8,iOS=8}" 
+                                                                       WidthRequest="{OnPlatform Default=12, Android=8,iOS=8}" Margin="3"
+                                                                       Background="#FF5F5D"/>
+                                                            <Label Text="FutureValue" FontSize="{OnPlatform Default=12, Android=8,iOS=8}"/>
+                                                        </HorizontalStackLayout>
+                                                        <HorizontalStackLayout>
+                                                            <Rectangle HeightRequest="{OnPlatform Default=12, Android=8,iOS=8}" 
+                                                                       WidthRequest="{OnPlatform Default=12, Android=8,iOS=8}" Margin="3"
+                                                                       Background="#F4A300"/>
+                                                            <Label Text="TotalInvested" FontSize="{OnPlatform Default=12, Android=8,iOS=8}"/>
+                                                        </HorizontalStackLayout>
+                                                        <HorizontalStackLayout>
+                                                            <Rectangle HeightRequest="{OnPlatform Default=12, Android=8,iOS=8}" 
+                                                                       WidthRequest="{OnPlatform Default=12, Android=8,iOS=8}" Margin="3"
+                                                                       Background="#2980B9"/>
+                                                            <Label Text="InterestEarned" FontSize="{OnPlatform Default=12, Android=8,iOS=8}"/>
+                                                        </HorizontalStackLayout>
+                                                    </HorizontalStackLayout>
+                                                </DataTemplate>
+                                            </chart:ChartLegend.ItemTemplate>
+                                        </chart:ChartLegend>
+                                    </chart:SfCartesianChart.Legend>
+
+                                    <chart:ColumnSeries ItemsSource="{Binding AdjustedData}"
+                                                        XBindingPath="AmountName"
+                                                        YBindingPath="Amount" 
+                                                        ShowDataLabels="True"
+                                                        PaletteBrushes="{Binding CustomBrushes}"
+                                                        EnableAnimation="True" Width="0.5">
+                                        <chart:ColumnSeries.LabelTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Item.AmountName, Converter={StaticResource SegmentColorConverter1}}" Stroke="Transparent"  StrokeShape="RoundRectangle 5" Padding="5">
+                                                    <HorizontalStackLayout>
+                                                        <Label Text="{Binding Item.Amount, StringFormat='₹ {0:}'}"
+                                                               TextColor="White"
+                                                               FontSize="{OnPlatform Default=12, Android=8,iOS=8}"
+                                                               HorizontalOptions="Center"
+                                                               VerticalOptions="Center"/>
+                                                    </HorizontalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+                                        </chart:ColumnSeries.LabelTemplate>
+                                        <chart:ColumnSeries.DataLabelSettings>
+                                            <chart:CartesianDataLabelSettings LabelPlacement="Outer"/>
+                                        </chart:ColumnSeries.DataLabelSettings>
+                                    </chart:ColumnSeries>
+
+                                </chart:SfCartesianChart>
+
+                            </cards:SfCardView>
+
+                            <cards:SfCardView Grid.Column="1" Margin="{OnPlatform Default='30,0,30,20', Android='0,5,25,15', iOS='0,5,25,15'}" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
+
+                                <chart:SfCircularChart Margin="{OnPlatform Default='5,0',Android=0,iOS=0}">
+
+                                    <chart:SfCircularChart.Resources>
+                                        <ResourceDictionary>
+                                            <local:SegmentColorConverter x:Key="SegmentColorConverter"/>
+                                            <local:NumberFormatterConverter x:Key="NumberFormatConverter"/>
+                                        </ResourceDictionary>
+                                    </chart:SfCircularChart.Resources>
+
+                                    <chart:SfCircularChart.Legend>
+                                        <chart:ChartLegend Placement="Bottom">
+                                            <chart:ChartLegend.LabelStyle>
+                                                <chart:ChartLegendLabelStyle Margin="{OnPlatform WinUI='0,0,10,0', MacCatalyst='0,0,10,0'}"/>
+                                            </chart:ChartLegend.LabelStyle>
+                                        </chart:ChartLegend>
+                                    </chart:SfCircularChart.Legend>
+
+                                    <chart:DoughnutSeries ItemsSource="{Binding SIPOverallData}"
+                                                          XBindingPath="AmountName"
+                                                          YBindingPath="Amount"
+                                                          EnableAnimation="True"
+                                                          PaletteBrushes="{Binding CustomBrushes1}"
+                                                          LegendIcon="SeriesType"
+                                                          ShowDataLabels="{OnPlatform Android=False, iOS=False, Default=True}"
+                                                          EnableTooltip="{OnPlatform Android=True, iOS=True, Default=False}" Radius="0.7">
+                                        <chart:DoughnutSeries.LabelTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Item.AmountName, Converter={StaticResource SegmentColorConverter}}" Stroke="Transparent"  StrokeShape="RoundRectangle 5" Padding="5">
+                                                    <HorizontalStackLayout>
+                                                        <Label Text="{Binding Item.Amount, Converter={StaticResource NumberFormatConverter}}"
+                                                               TextColor="White"
+                                                               FontSize="12"
+                                                               HorizontalOptions="Center"
+                                                               VerticalOptions="Center"/>
+                                                    </HorizontalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+                                        </chart:DoughnutSeries.LabelTemplate>
+                                        <chart:DoughnutSeries.TooltipTemplate>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout>
+                                                    <Label Text="{Binding Item.Amount, Converter={StaticResource NumberFormatConverter}}"
+                                                           TextColor="White"
+                                                           FontSize="12"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </chart:DoughnutSeries.TooltipTemplate>
+                                        <chart:DoughnutSeries.DataLabelSettings>
+                                            <chart:CircularDataLabelSettings LabelPosition="Outside">
+                                            </chart:CircularDataLabelSettings>
+                                        </chart:DoughnutSeries.DataLabelSettings>
+                                    </chart:DoughnutSeries>
+                                </chart:SfCircularChart>
+
+                            </cards:SfCardView>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+
+        </ScrollView>
+
+    </Border>
+
+</ContentPage>
