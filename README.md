@@ -1,4 +1,4 @@
-# Growth Insights Investment Calculator in .NET MAUI.
+# Investment Growth Visualization Calculator Using .NET MAUI Toolkit Charts.
 This example showcases the creation of a Investment Calculator using Syncfusion .NET MAUI Toolkit controls to visualizing the investment growth.
 
 An **Investment Calculator** is a powerful tool designed to help investors make informed financial decisions. It allows users to estimate potential returns on various types of investments, including Systematic Investment Plan (SIP), Lumpsum investments, and Mutual Funds. By inputting details such as investment amount, duration, and expected rate of return, users can visualize the growth of their investments over time.
