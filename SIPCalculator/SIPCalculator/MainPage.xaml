@@ -32,6 +32,7 @@
                 </HorizontalStackLayout>
 
                 <Grid Grid.Row="1" Margin="{OnPlatform Default=5, Android=0}">
+                    <!--Choose Type of Investments-->
                     <segmentedControl:SfSegmentedControl x:Name="segmentControl" HorizontalOptions="Center" SegmentWidth="{OnPlatform Android=100, Default=200, iOS=100}" CornerRadius="5" Stroke="#2980B9" SelectionChanged="SfSegmentedControl_SelectionChanged" SelectedIndex="0" StrokeThickness="2" HeightRequest="{OnPlatform Android=20}">
                         <segmentedControl:SfSegmentedControl.SelectionIndicatorSettings>
                             <segmentedControl:SelectionIndicatorSettings SelectionIndicatorPlacement="Fill"
@@ -61,12 +62,15 @@
                         </Grid.RowDefinitions>
 
                         <HorizontalStackLayout Margin="{OnPlatform Default='40,5,5,5', Android='10,0', iOS='10,0'}" Grid.Row="0" Spacing="{OnPlatform Android=10, Default=100, iOS=20}">
+                            <!--Select Investment Modes-->
                             <RadioButton x:Name="radioButton1" Content="Investment Amount" HorizontalOptions="Start" FontSize="{OnPlatform Android=12,iOS=12, Default=15}" CheckedChanged="radioButton1_CheckedChanged" IsChecked="True"/>
                             <RadioButton x:Name="radioButton2" Content="Goal Amount" HorizontalOptions="Start" FontSize="{OnPlatform Android=12, iOS=12, Default=15}" CheckedChanged="radioButton2_CheckedChanged"/>
                             <RadioButton x:Name="radioButton3" Content="StepUp" HorizontalOptions="Start" FontSize="{OnPlatform Android=12, iOS=12, Default=15}" CheckedChanged="radioButton3_CheckedChanged"/>
                         </HorizontalStackLayout>
 
                         <HorizontalStackLayout x:Name="interactionLayout" Grid.Row="1" Margin="{OnPlatform Default='40,5,0,0', Android='15,0,0,0', iOS='15,0,0,0'}" Spacing="{OnPlatform Default=100, Android=50, iOS=50, MacCatalyst=150}">
+                            
+                            <!--User Interaction Layouts-->
                             <VerticalStackLayout Spacing="{OnPlatform Default=5, Android=2, iOS=2}">
                                 <HorizontalStackLayout Spacing="{OnPlatform Default=30, Android=10, iOS=10}">
                                     <Label x:Name="initialamountLabel" Text="Montly Investment" FontSize="{OnPlatform Default=17, Android=12, iOS=12}" VerticalOptions="Center"/>
@@ -108,6 +112,7 @@
 
                             <cards:SfCardView x:Name="cartesianChart1" Grid.Column="0" Margin="{OnPlatform Default='30,0,0,20', Android='25,5,0,15', iOS='25,5,0,15'}" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
 
+                                <!--StackedColumn Chart represents Investment Growth-->
                                 <chart:SfCartesianChart PaletteBrushes="{Binding CustomBrushes}" Margin="10">
                                     
                                     <chart:SfCartesianChart.Resources>
@@ -179,6 +184,7 @@
 
                             <cards:SfCardView x:Name="cartesianChart2" IsVisible="False" Grid.Column="0" Margin="{OnPlatform Default='30,0,0,20',Android='25,5,0,15', iOS='25,5,0,15'}" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
 
+                                <!--Column Chart represents the inflation impact Investment-->
                                 <chart:SfCartesianChart Margin="10,0,10,10">
 
                                     <chart:SfCartesianChart.Resources>
@@ -270,6 +276,7 @@
 
                             <cards:SfCardView Grid.Column="1" Margin="{OnPlatform Default='30,0,30,20', Android='0,5,25,15', iOS='0,5,25,15'}" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
 
+                                <!--Doughnut Chart represent overall Investment-->
                                 <chart:SfCircularChart Margin="{OnPlatform Default='5,0',Android=0,iOS=0}">
 
                                     <chart:SfCircularChart.Resources>
@@ -320,8 +327,7 @@
                                             </DataTemplate>
                                         </chart:DoughnutSeries.TooltipTemplate>
                                         <chart:DoughnutSeries.DataLabelSettings>
-                                            <chart:CircularDataLabelSettings LabelPosition="Outside">
-                                            </chart:CircularDataLabelSettings>
+                                            <chart:CircularDataLabelSettings LabelPosition="Inside" SmartLabelAlignment="Shift"/>
                                         </chart:DoughnutSeries.DataLabelSettings>
                                     </chart:DoughnutSeries>
                                 </chart:SfCircularChart>
