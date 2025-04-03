@@ -1,5 +1,4 @@
-﻿
-using Syncfusion.Maui.Toolkit.Charts;
+﻿using Syncfusion.Maui.Toolkit.Charts;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
@@ -31,6 +30,15 @@ namespace SIPCalculator
 
                 if (isStepUpInvest)
                 {
+                    //SIP StepUp Investment
+                    // FV = Σ [P0 * (1 + s)^(t-1) * ((1 + r)^12 - 1) / r * (1 + r)],
+                    // where
+                    // P0 = initial monthly investment,
+                    // s = step-up rate,
+                    // r = monthly return,
+                    // t = year
+                    // FV = future value.
+
                     double stepUpRate = viewModel.AnnualStepUp / 100;
                     double monthlyInvestment = viewModel.IntialAmount;
                     double totalInvested = 0;
@@ -76,6 +84,14 @@ namespace SIPCalculator
             }
             else if (isLumpSum)
             {
+                //Future Value = P × (1 + r)^n
+                //Where
+                //P - Principal Contributions each month
+                //R - Expected Rate of Return(per month)
+                //N - Number of contributions towards the principal
+
+                //Total Gains = Future Value - P
+
                 double rateofInterest = viewModel.ExpectedReturns / 100;
                 if (isInvestAmount)
                 {
@@ -91,6 +107,20 @@ namespace SIPCalculator
             {
                 if(isMutalFundMonthlySIP)
                 {
+                    //Mutual Fund Monthly SIP
+                    //Future Value = P * ({[1 + r] ^ n – 1} / r) * (1 + r)
+                    //Where:
+                    //P - Principal contributions each month
+                    //r - expected rate of return (per month)
+                    //n - Number of contributions towards the principal
+
+                    //Total Invest = P * n
+                    //Where:
+                    //P - Principal contributions each month
+                    //n - Number of contributions towards the principal
+
+                    //Estimated Returns = FV - Total Invest
+
                     double expectedReturnsValue = viewModel.ExpectedReturns / 100;
                     double rateofInterest = Math.Pow(1 + expectedReturnsValue, 1.0 / 12) - 1;
                     for (int period = 1; period <= viewModel.InvestPeriod; period++)
@@ -104,6 +134,15 @@ namespace SIPCalculator
                 }
                 else
                 {
+                    //Mutual Fund Lumpsum
+                    //P = Future Value × (1 + r)^n
+                    //Where
+                    //P - Principal Contributions each month
+                    //R - Expected Rate of Return(per month)
+                    //N - Number of contributions towards the principal
+
+                    //Interest Earned = Future Value - P
+
                     double rateofInterest = viewModel.ExpectedReturns / 100;
                     for (int period = 1; period <= viewModel.InvestPeriod; period++)
                     {
@@ -121,13 +160,13 @@ namespace SIPCalculator
             var data = new ObservableCollection<Model>();
             if (isSIP)
             {
-                int count = viewModel.InvestmentData.Count - 1;
+                int count = viewModel.InvestmentData!.Count - 1;
                 data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
                 data.Add(new Model() { AmountName = "EstimatedReturns", Amount = viewModel.InvestmentData[count].EstimatedReturns });
             }
             else if (isLumpSum)
             {
-                int count = viewModel.InvestmentData.Count - 1;
+                int count = viewModel.InvestmentData!.Count - 1;
                 data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
                 data.Add(new Model() { AmountName = "Gains", Amount = viewModel.InvestmentData[count].EstimatedReturns });
             }
@@ -135,17 +174,18 @@ namespace SIPCalculator
             {
                 if (isMutalFundMonthlySIP)
                 {
-                    int count = viewModel.InvestmentData.Count - 1;
+                    int count = viewModel.InvestmentData!.Count - 1;
                     data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
                     data.Add(new Model() { AmountName = "EstimatedReturns", Amount = viewModel.InvestmentData[count].EstimatedReturns });
                 }
                 else
                 {
-                    int count = viewModel.InvestmentData.Count - 1;
+                    int count = viewModel.InvestmentData!.Count - 1;
                     data.Add(new Model() { AmountName = "TotalInvested", Amount = viewModel.InvestmentData[count].TotalInvested });
                     data.Add(new Model() { AmountName = "Gains", Amount = viewModel.InvestmentData[count].EstimatedReturns });
                 }
             }
+
             viewModel.OverallInvestmentData = data;
         }
 
@@ -154,6 +194,19 @@ namespace SIPCalculator
             var data = new ObservableCollection<Model>();
             if (isSIP)
             {
+                //P = Future Value / [({[1 + r] ^ n – 1} / r) * (1 + r)]
+                //Where:
+                //P - Principal contributions each month
+                //r - expected rate of return (per month)
+                //n - Number of contributions towards the principal
+
+                //Total Invest = P * n
+                //Where:
+                //P - Principal contributions each month
+                //n - Number of contributions towards the principal
+
+                //Estimated Returns = FV - Total Invest
+
                 double rateofInterest = (viewModel.ExpectedReturns / 12) / 100;
                 double totalMonths = viewModel.InvestPeriod * 12;
                 double value = Math.Pow((1 + rateofInterest), totalMonths) - 1;
@@ -167,6 +220,14 @@ namespace SIPCalculator
             }
             else if (isLumpSum)
             {
+                //P = Future Value × (1 + r)^n
+                //Where
+                //P - Principal Contributions each month
+                //r - Expected Rate of Return(per month)
+                //n - Number of contributions towards the principal
+
+                //Interest Earned = Future Value - P
+
                 double rateofInterest = viewModel.ExpectedReturns / 100;
                 double initialInvest = viewModel.IntialAmount / Math.Pow(1 + rateofInterest, viewModel.InvestPeriod);
                 double totalInterest = viewModel.IntialAmount - initialInvest;
@@ -181,6 +242,11 @@ namespace SIPCalculator
             var data = new ObservableCollection<Model>();
             if (isSIP)
             {
+                //FV = Current Goal Amount * (1 + Inflation Rate) ^ n
+                //Where
+                //Inflation Rate = 6% (Average)
+                //n - Number of Months
+
                 double rateofInterest = (viewModel.ExpectedReturns / 12) / 100;
                 double adjustFV = viewModel.IntialAmount * Math.Pow(1 + 0.06, viewModel.InvestPeriod);
                 double fvfactor = (Math.Pow(1 + rateofInterest, viewModel.InvestPeriod * 12) - 1) / rateofInterest;
@@ -193,6 +259,11 @@ namespace SIPCalculator
             }
             else if(isLumpSum)
             {
+                //FV = Current Goal Amount * (1 + Inflation Rate) ^ n
+                //Where
+                //Inflation Rate = 6% (Average)
+                //n - Number of Months
+
                 double rateofInterest = viewModel.ExpectedReturns / 100;
                 double adjustfvData = viewModel.IntialAmount * Math.Pow(1 + 0.06, viewModel.InvestPeriod);
                 double adjustinitialInvest = adjustfvData / Math.Pow(1 + rateofInterest, viewModel.InvestPeriod);
@@ -211,11 +282,11 @@ namespace SIPCalculator
                 string? input = e.NewTextValue?.Replace("₹", "").Trim();
                 if (double.TryParse(input, out double value))
                 {
-                    viewModel.IntialAmount = value;
+                    viewModel!.IntialAmount = value;
                 }
                 else
                 {
-                    viewModel.IntialAmount = 1;
+                    viewModel!.IntialAmount = 1;
                 }
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
@@ -243,11 +314,11 @@ namespace SIPCalculator
                 string? input = e.NewTextValue?.Replace("Yrs", "").Trim();
                 if (int.TryParse(input, out int value))
                 {
-                    viewModel.InvestPeriod = value;
+                    viewModel!.InvestPeriod = value;
                 }
                 else
                 {
-                    viewModel.InvestPeriod = 1;
+                    viewModel!.InvestPeriod = 1;
                 }
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
@@ -275,11 +346,11 @@ namespace SIPCalculator
                 string? input = e.NewTextValue?.Replace("%", "").Trim();
                 if (double.TryParse(input, out double value))
                 {
-                    viewModel.ExpectedReturns = value;
+                    viewModel!.ExpectedReturns = value;
                 }
                 else
                 {
-                    viewModel.ExpectedReturns = 1;
+                    viewModel!.ExpectedReturns = 1;
                 }
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
@@ -400,7 +471,7 @@ namespace SIPCalculator
                 {
                     interactionLayout.Spacing = 100;
                 }
-                viewModel.IntialAmount = 5000;
+                viewModel!.IntialAmount = 5000;
                 viewModel.InvestPeriod = 5;
                 viewModel.ExpectedReturns = 12;
                 if(isLumpSum)
@@ -445,7 +516,7 @@ namespace SIPCalculator
                 {
                     interactionLayout.Spacing = 100;
                 }    
-                viewModel.IntialAmount = 1000000;
+                viewModel!.IntialAmount = 1000000;
                 viewModel.InvestPeriod = 5;
                 viewModel.ExpectedReturns = 12;
             }
@@ -476,7 +547,7 @@ namespace SIPCalculator
                 annualSetUpBox.IsVisible = true;
                 if(DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
                 {
-                    interactionLayout.Spacing = 25;
+                    interactionLayout.Spacing = 20;
                 }
                 else if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
                 {
@@ -517,22 +588,24 @@ namespace SIPCalculator
 
     public class SegmentColorConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is string stage)
+            if (value is Model model)
             {
-                return stage switch
+                switch (model.AmountName)
                 {
-                    "TotalInvested" => Color.FromArgb("#F4A300"),
-                    "EstimatedReturns" or "Gains" or "InterestEarned" => Color.FromArgb("#1F77B4"),
-                    "TotalAmount" or "MonthlyInvest" or "FutureValue" => Color.FromArgb("#27AE60"),
-                    _ => Colors.Gray
-                };
+                    case "FutureValue":
+                        return Color.FromArgb("#34495E");
+                    case "TotalInvested":
+                        return Color.FromArgb("#16A085");
+                    case "InterestEarned":
+                        return Color.FromArgb("#20B2AA");
+                }
             }
             return Colors.Gray;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -540,22 +613,24 @@ namespace SIPCalculator
 
     public class SegmentColorConverter1 : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is string stage)
+            if (value is Model model)
             {
-                return stage switch
+                switch(model.AmountName)
                 {
-                    "TotalInvested" => Color.FromArgb("#F4A300"),
-                    "EstimatedReturns" or "InterestEarned" => Color.FromArgb("#1F77B4"),
-                    "FutureValue"=> Color.FromArgb("#FF5F5D"),
-                    _ => Colors.Gray
-                };
+                    case "TotalInvested":
+                        return Color.FromArgb("#6B5B95");
+                    case "EstimatedReturns" or "InterestEarned" or "Gains":
+                        return Color.FromArgb("#D3A6D3");
+                    case "MonthlyInvest":
+                        return Color.FromArgb("#F4A261");
+                }
             }
             return Colors.Gray;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -563,32 +638,36 @@ namespace SIPCalculator
 
     public class NumberFormatterConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is double number)
+            if (value is Model model)
             {
-                return FormatNumber(number);
+                double number = 0;
+                switch (parameter?.ToString())
+                {
+                    case "TotalInvested":
+                        number = model.TotalInvested;
+                        break;
+                    case "EstimatedReturns":
+                        number = model.EstimatedReturns;
+                        break;
+                    case "Amount":
+                        number = model.Amount;
+                        break;
+                }
+                if (number >= 1000000)
+                    return $"₹ {number / 1_000_000:0.#}M";
+                else if (number >= 1000)
+                    return $"₹ {number / 1000:0.#}K";
+                else
+                    return $"₹ {number:0}";
             }
-            if (value is int intValue)
-            {
-                return FormatNumber(intValue);
-            }
-            return value;
+            return string.Empty;
         }
 
-        private string FormatNumber(double num)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (num >= 1000000)
-                return $"₹ {num / 1_000_000:0.#}M";
-            else if (num >= 1000)
-                return $"₹ {num / 1000:0.#}K";
-            else
-                return $"₹ {num:0}";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
+            throw new NotImplementedException();
         }
     }
 

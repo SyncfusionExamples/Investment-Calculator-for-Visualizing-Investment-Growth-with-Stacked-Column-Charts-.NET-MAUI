@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-
 namespace SIPCalculator
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Model> investmentData;
-        public ObservableCollection<Model> InvestmentData
+        private ObservableCollection<Model>? investmentData;
+        public ObservableCollection<Model>? InvestmentData
         {
             get => investmentData;
             set
@@ -19,8 +18,8 @@ namespace SIPCalculator
             }
         }
 
-        private ObservableCollection<Model> overallInvestmentData;
-        public ObservableCollection <Model> OverallInvestmentData
+        private ObservableCollection<Model>? overallInvestmentData;
+        public ObservableCollection<Model>? OverallInvestmentData
         {
             get => overallInvestmentData;
             set
@@ -33,8 +32,8 @@ namespace SIPCalculator
             }
         }
 
-        private ObservableCollection<Model> inflationImpactedData;
-        public ObservableCollection<Model> InflationImpactedData
+        private ObservableCollection<Model>? inflationImpactedData;
+        public ObservableCollection<Model>? InflationImpactedData
         {
             get => inflationImpactedData;
             set
@@ -118,16 +117,16 @@ namespace SIPCalculator
 
             CustomBrushes = new List<Brush>()
             {
-                 new SolidColorBrush(Color.FromArgb("#FF5F5D")),
-                 new SolidColorBrush(Color.FromArgb("#F4A300")),
-                 new SolidColorBrush(Color.FromArgb("#2980B9")),
+                new SolidColorBrush(Color.FromArgb("#34495E")),  
+                new SolidColorBrush(Color.FromArgb("#16A085")),
+                new SolidColorBrush(Color.FromArgb("#20B2AA"))
             };
 
             CustomBrushes1 = new List<Brush>()
             {
-                new SolidColorBrush(Color.FromArgb("#F4A300")),
-                new SolidColorBrush(Color.FromArgb("#1F77B4")),
-                new SolidColorBrush(Color.FromArgb("#27AE60")),
+                new SolidColorBrush(Color.FromArgb("#6B5B95")),
+                new SolidColorBrush(Color.FromArgb("#D3A6D3")),
+                new SolidColorBrush(Color.FromArgb("#F4A261")),
             };
 
             OverallInvestmentData = GetOverall_Investment_DataCollection();
@@ -142,6 +141,19 @@ namespace SIPCalculator
 
         public ObservableCollection<Model> Get_Investment_DataCollection()
         {
+            //Future Value = P * ({[1 + r] ^ n – 1} / r) * (1 + r)
+            //Where:
+            //P - Principal contributions each month
+            //r - expected rate of return (per month)
+            //n - Number of contributions towards the principal
+
+            //Total Invest = P * n
+            //Where:
+            //P - Principal contributions each month
+            //n - Number of contributions towards the principal
+
+            //Estimated Returns = FV - Total Invest
+
             var data = new ObservableCollection<Model>();
 
             double expectedReturnsValue = ExpectedReturns / 100;
@@ -163,10 +175,9 @@ namespace SIPCalculator
         public ObservableCollection<Model> GetOverall_Investment_DataCollection()
         {
             var data = new ObservableCollection<Model>();
-            int count = InvestmentData.Count - 1;
+            int count = InvestmentData!.Count - 1;
             data.Add(new Model() { AmountName = "TotalInvested", Amount = InvestmentData[count].TotalInvested });
             data.Add(new Model() { AmountName = "EstimatedReturns", Amount = InvestmentData[count].EstimatedReturns });
-            data.Add(new Model() { AmountName = "TotalAmount", Amount = InvestmentData[count].TotalInvested + InvestmentData[count].EstimatedReturns });
             return data;
         }
     }
