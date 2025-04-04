@@ -4,13 +4,13 @@
              xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
              xmlns:segmentedControl="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
              xmlns:cards="clr-namespace:Syncfusion.Maui.Toolkit.Cards;assembly=Syncfusion.Maui.Toolkit"
-             xmlns:local="clr-namespace:SIPCalculator"
+             xmlns:local="clr-namespace:SIPCalculator" x:DataType="local:ViewModel"
              x:Class="SIPCalculator.MainPage">
 
     <ContentPage.BindingContext>
         <local:ViewModel x:Name="viewModel"/>
     </ContentPage.BindingContext>
-    
+
     <Border StrokeShape="RoundRectangle 10" Margin="5" Stroke="Black" StrokeThickness="2">
 
         <ScrollView VerticalScrollBarVisibility="{OnPlatform Android=Always, Default=Never, iOS=Always}">
@@ -58,7 +58,7 @@
                     <RadioButton x:Name="radioButton3" Content="StepUp" HorizontalOptions="Start" FontSize="{OnPlatform Android=12, iOS=12, Default=15}" CheckedChanged="radioButton3_CheckedChanged"/>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout x:Name="interactionLayout" Grid.Row="3" x:DataType="local:ViewModel" Margin="{OnPlatform Default='40,0,0,0', Android='15,0,0,0', iOS='15,0,0,0'}" Spacing="{OnPlatform Default=100, Android=50, iOS=50, MacCatalyst=150}">
+                <HorizontalStackLayout x:Name="interactionLayout" Grid.Row="3" Margin="{OnPlatform Default='40,0,0,0', Android='15,0,0,0', iOS='15,0,0,0'}" Spacing="{OnPlatform Default=100, Android=50, iOS=50, MacCatalyst=150}">
 
                     <!--User Interaction Layouts-->
                     <VerticalStackLayout Spacing="{OnPlatform Default=5, Android=2, iOS=2}">
@@ -101,7 +101,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <cards:SfCardView x:Name="cartesianChart1" x:DataType="local:ViewModel" Grid.Column="0" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
+                    <cards:SfCardView x:Name="cartesianChart1" Grid.Column="0" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
 
                         <!--StackedColumn Chart represents Investment Growth-->
                         <chart:SfCartesianChart PaletteBrushes="{Binding CustomBrushes}" Margin="10">
@@ -173,7 +173,7 @@
 
                     </cards:SfCardView>
 
-                    <cards:SfCardView x:Name="cartesianChart2" x:DataType="local:ViewModel" IsVisible="False" Grid.Column="0" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
+                    <cards:SfCardView x:Name="cartesianChart2" IsVisible="False" Grid.Column="0" CornerRadius="20" BorderColor="#2980B9" BorderWidth="4" BackgroundColor="White">
 
                         <!--Column Chart represents the inflation impact Investment-->
                         <chart:SfCartesianChart Margin="10" Grid.Column="0">
@@ -236,7 +236,7 @@
 
                     </cards:SfCardView>
 
-                    <cards:SfCardView x:DataType="local:ViewModel" Grid.Column="1" CornerRadius="20" BorderColor="#6B5B95" BorderWidth="4" BackgroundColor="White">
+                    <cards:SfCardView Grid.Column="1" CornerRadius="20" BorderColor="#6B5B95" BorderWidth="4" BackgroundColor="White">
 
                         <!--Doughnut Chart represent overall Investment-->
                         <chart:SfCircularChart Margin="{OnPlatform Default='5,0',Android=0,iOS=0}">

@@ -152,6 +152,7 @@ namespace SIPCalculator
                     }
                 }
             }
+
             viewModel.InvestmentData = data;
         }
 
@@ -234,6 +235,7 @@ namespace SIPCalculator
                 data.Add(new Model() { AmountName = "TotalInvested", Amount = Math.Round(initialInvest, 0) });
                 data.Add(new Model() { AmountName = "InterestEarned", Amount = Math.Round(totalInterest, 0) });
             }
+
             viewModel.OverallInvestmentData = data;
         }
 
@@ -272,6 +274,7 @@ namespace SIPCalculator
                 data.Add(new Model() { AmountName = "TotalInvested", Amount = Math.Round(adjustinitialInvest, 0) });
                 data.Add(new Model() { AmountName = "InterestEarned", Amount = Math.Round(adjusttotalInterest, 0) });
             }
+
             viewModel.InflationImpactedData = data;
         }
 
@@ -288,9 +291,11 @@ namespace SIPCalculator
                 {
                     viewModel!.IntialAmount = 1;
                 }
+
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
             }
+
             if (viewModel != null && isGoalAmount)
             {
                 string? input = e.NewTextValue?.Replace("₹", "").Trim();
@@ -302,6 +307,7 @@ namespace SIPCalculator
                 {
                     viewModel.IntialAmount = 1;
                 }
+
                 Dynamically_Investment_GoalAmount_DataCollection();
                 Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection();
             }
@@ -320,9 +326,11 @@ namespace SIPCalculator
                 {
                     viewModel!.InvestPeriod = 1;
                 }
+
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
             }
+
             if (viewModel != null && isGoalAmount)
             {
                 string? input = e.NewTextValue?.Replace("Yrs", "").Trim();
@@ -334,6 +342,7 @@ namespace SIPCalculator
                 {
                     viewModel.InvestPeriod = 1;
                 }
+
                 Dynamically_Investment_GoalAmount_DataCollection();
                 Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection();
             }
@@ -352,9 +361,11 @@ namespace SIPCalculator
                 {
                     viewModel!.ExpectedReturns = 1;
                 }
+
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
             }
+
             if (viewModel != null && isGoalAmount)
             {
                 string? input = e.NewTextValue?.Replace("%", "").Trim();
@@ -366,6 +377,7 @@ namespace SIPCalculator
                 {
                     viewModel.ExpectedReturns = 1;
                 }
+
                 Dynamically_Investment_GoalAmount_DataCollection();
                 Dynamically_Inflation_Impacted_Investment_GoalAmount_DataCollection();
             }
@@ -384,6 +396,7 @@ namespace SIPCalculator
                 {
                     viewModel.AnnualStepUp = 1;
                 }
+
                 Dynamically_Get_Investment_DataCollection();
                 Dynamically_GetOverall_Investment_DataCollection();
             }
