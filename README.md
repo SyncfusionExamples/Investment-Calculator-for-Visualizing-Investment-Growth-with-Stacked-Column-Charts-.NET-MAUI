@@ -28,8 +28,7 @@ The [.NET MAUI SfCircularChart](https://help.syncfusion.com/maui-toolkit/circula
 By integrating these Syncfusion controls, the Investment Calculator ensures a seamless and data-driven experience, enabling investors to make well-informed financial decisions with ease.
 
 After executing these code examples, we will get the output that resembles the following image.
-![Screenshot 2025-04-01 213353](https://github.com/user-attachments/assets/b9d9cb59-5281-4122-bcde-0dc9eb1a3718)
-
+![InvestmentCalculator_demo_Windows](https://github.com/user-attachments/assets/cefac5db-d181-476f-9a6b-069ec4fdfa35)
 
 ## Troubleshooting
 Path too long exception
